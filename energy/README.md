@@ -1,3 +1,4 @@
+![Quatt Dashboard](screenprint.png)
 # Quatt - Energy & Costs
 
 Dashboard showing the energy consumption of the Quatt Hybrid Duo heat pump, the contribution of solar and batteries, boiler activity and gas usage.
