@@ -1,3 +1,5 @@
+![Quatt Performance](screenprint.png)
+
 # Quatt - Performance
 
 Technical performance dashboard for the Quatt Hybrid Duo heat pump. Shows COP trends, water temperatures, flow rate and power input for both heat pump units.
