@@ -1,3 +1,4 @@
+![Battery Dashboard](screenprint.png)
 # Battery - HA-Velp
 
 Overview dashboard for the complete home battery setup, combining solar production, battery status, energy prices and revenue tracking.
