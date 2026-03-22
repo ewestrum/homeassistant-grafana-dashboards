@@ -2,8 +2,6 @@
 
 A collection of Grafana dashboards for monitoring a smart home energy setup in the Netherlands. Built on top of Home Assistant with InfluxDB 2.7 as the time series backend, running on a Synology NAS.
 
-![Battery Dashboard](battery/screenshot.png)
-
 ## Stack
 
 | Component | Version | Location |
