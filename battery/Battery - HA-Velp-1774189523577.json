@@ -1,0 +1,1050 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "afg9o05w4tkaoa"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 9,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: -6h)\r\n  |> filter(fn: (r) => r.entity_id == \"marstek_venus_modbus_stored_energy\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value / 5.12 * 100.0}))\r\n  |> set(key: \"_field\", value: \"Marstek (%)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afg9o05w4tkaoa"
+          },
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: -6h)\r\n  |> filter(fn: (r) => r.entity_id == \"marstek_venus_modbus_stored_energy\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> last()\r\n  |> set(key: \"_field\", value: \"Marstek (kWh)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afg9o05w4tkaoa"
+          },
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: -6h)\r\n  |> filter(fn: (r) => r.entity_id == \"sessy_dn4t_state_of_charge\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> last()\r\n  |> set(key: \"_field\", value: \"Sessy DN4T (%)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afg9o05w4tkaoa"
+          },
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: -6h)\r\n  |> filter(fn: (r) => r.entity_id == \"sessy_d9af_state_of_charge\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> last()\r\n  |> set(key: \"_field\", value: \"Sessy D9AF (%)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afg9o05w4tkaoa"
+          },
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: -6h)\r\n  |> filter(fn: (r) => r.entity_id == \"sessy_dx3j_state_of_charge\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> last()\r\n  |> set(key: \"_field\", value: \"Sessy DX3J (%)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afg9o05w4tkaoa"
+          },
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: -6h)\r\n  |> filter(fn: (r) => r.entity_id == \"totaal_opgeslagen_energie\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> last()\r\n  |> set(key: \"_field\", value: \"Totaal (kWh)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "F"
+        }
+      ],
+      "title": "Total Power",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "afg9o05w4tkaoa"
+      },
+      "description": "Revenue generated with Marstek",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "currencyEUR"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 7
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "query": "power = from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.entity_id == \"marstek_venus_modbus_battery_power\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> aggregateWindow(every: 5m, fn: last, createEmpty: true)\r\n  |> fill(usePrevious: true)\r\n\r\nprice = from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.entity_id == \"frank_energie_prices_current_electricity_price_all_in\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> aggregateWindow(every: 5m, fn: last, createEmpty: true)\r\n  |> fill(usePrevious: true)\r\n\r\njoin(tables: {power: power, price: price}, on: [\"_time\"])\r\n  |> map(fn: (r) => ({\r\n      _time: r._time,\r\n      _value: if r._value_power < 0.0 \r\n              then (r._value_power * -1.0) / 1000.0 * r._value_price * (5.0 / 60.0)\r\n              else 0.0\r\n  }))\r\n  |> cumulativeSum()\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value, _field: \"Marstek opbrengst (€)\"}))\r\n  |> group(columns: [\"_field\"])",
+          "refId": "A"
+        }
+      ],
+      "title": "Revenue Generated Marstek",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "afg9o05w4tkaoa"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 7
+      },
+      "id": 11,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "query": "power = from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => \r\n      r.entity_id == \"sessy_dn4t_power\" or\r\n      r.entity_id == \"sessy_d9af_power\" or\r\n      r.entity_id == \"sessy_dx3j_power\"\r\n  )\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> aggregateWindow(every: 5m, fn: mean, createEmpty: false)\r\n  |> group(columns: [\"_time\"])\r\n  |> sum()\r\n  |> group()\r\n\r\nprice = from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.entity_id == \"frank_energie_prices_current_electricity_price_all_in\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> aggregateWindow(every: 5m, fn: last, createEmpty: true)\r\n  |> fill(usePrevious: true)\r\n\r\njoin(tables: {power: power, price: price}, on: [\"_time\"])\r\n  |> map(fn: (r) => ({\r\n      _time: r._time,\r\n      _value: if r._value_power > 0.0\r\n              then r._value_power / 1000.0 * r._value_price * (5.0 / 60.0)\r\n              else 0.0\r\n  }))\r\n  |> cumulativeSum()\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value, _field: \"Sessy opbrengst (€)\"}))\r\n  |> group(columns: [\"_field\"])",
+          "refId": "A"
+        }
+      ],
+      "title": "Sessy Opbrengst",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "afg9o05w4tkaoa"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "W Solar productie (W)"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 15
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.entity_id == \"sessy_dx3j_state_of_charge\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> set(key: \"_field\", value: \"Sessy DX3J SOC (%)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afg9o05w4tkaoa"
+          },
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.entity_id == \"sessy_d9af_state_of_charge\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> set(key: \"_field\", value: \"Sessy D9AF SOC (%)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afg9o05w4tkaoa"
+          },
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.entity_id == \"sessy_dn4t_state_of_charge\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> set(key: \"_field\", value: \"Sessy DN4T SOC (%)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afg9o05w4tkaoa"
+          },
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"W\")\r\n  |> filter(fn: (r) => r.entity_id == \"envoy_122149071873_current_power_production\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> set(key: \"_field\", value: \"Solar productie (W)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "D"
+        }
+      ],
+      "title": "Sessy State of Charge",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "afg9o05w4tkaoa"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "kWh Marstek SOC (%)"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 15
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"W\")\r\n  |> filter(fn: (r) => r.entity_id == \"envoy_122149071873_current_power_production\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> set(key: \"_field\", value: \"Solar productie (W)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afg9o05w4tkaoa"
+          },
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"W\")\r\n  |> filter(fn: (r) => r.entity_id == \"marstek_venus_modbus_battery_power\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> set(key: \"_field\", value: \"Batterij vermogen (W)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afg9o05w4tkaoa"
+          },
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.entity_id == \"marstek_venus_modbus_stored_energy\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> map(fn: (r) => ({r with _value: r._value / 5.12 * 100.0}))\r\n  |> set(key: \"_field\", value: \"Marstek SOC (%)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "C"
+        }
+      ],
+      "title": "Marstek / Solar Power",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "afg9o05w4tkaoa"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Totaal (W)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Fase 1 (W)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Fase 2 (W)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "light-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Fase 3 (W)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "Totaal (W)"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": true,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 25
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.entity_id == \"p1_meter_3c39e72bdf42_active_power_l1\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> set(key: \"_field\", value: \"Fase 1 (W)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afg9o05w4tkaoa"
+          },
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.entity_id == \"p1_meter_3c39e72bdf42_active_power_l2\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> set(key: \"_field\", value: \"Fase 2 (W)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afg9o05w4tkaoa"
+          },
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.entity_id == \"p1_meter_3c39e72bdf42_active_power_l3\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> set(key: \"_field\", value: \"Fase 3 (W)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afg9o05w4tkaoa"
+          },
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.entity_id == \"p1_meter_3c39e72bdf42_active_power\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> set(key: \"_field\", value: \"Totaal (W)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "D"
+        }
+      ],
+      "title": "Total Power",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "afg9o05w4tkaoa"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisBorderShow": true,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "hidden",
+            "fillOpacity": 75,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": 0
+              },
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.28
+              },
+              {
+                "color": "orange",
+                "value": 0.32
+              },
+              {
+                "color": "red",
+                "value": 0.37
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 33
+      },
+      "id": 7,
+      "options": {
+        "barRadius": 0.15,
+        "barWidth": 0.82,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": -45,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.entity_id == \"frank_energie_prices_current_electricity_price_all_in\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n    |> aggregateWindow(every: 1h, fn: last, createEmpty: false)\r\n  |> set(key: \"_field\", value: \"Stroomprijs (€/kWh)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "A"
+        }
+      ],
+      "title": "Frank Stroom Prijzen",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "afg9o05w4tkaoa"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "% Sessy DN4T SOC (%)"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "% Sessy D9AF SOC (%)"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "% Sessy DX3J SOC (%)"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Solar productie (W)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sessy DN4T vermogen (W)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 33
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.4.1",
+      "targets": [
+        {
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.entity_id == \"sessy_dn4t_power\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> set(key: \"_field\", value: \"Sessy DN4T vermogen (W)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afg9o05w4tkaoa"
+          },
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.entity_id == \"sessy_d9af_power\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> set(key: \"_field\", value: \"Sessy D9AF vermogen (W)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afg9o05w4tkaoa"
+          },
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.entity_id == \"sessy_dx3j_power\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> set(key: \"_field\", value: \"Sessy DX3J vermogen (W)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afg9o05w4tkaoa"
+          },
+          "query": "from(bucket: \"homeassistant\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"W\")\r\n  |> filter(fn: (r) => r.entity_id == \"envoy_122149071873_current_power_production\")\r\n  |> filter(fn: (r) => r._field == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> set(key: \"_field\", value: \"Solar productie (W)\")\r\n  |> drop(columns: [\"domain\", \"entity_id\"])",
+          "refId": "D"
+        }
+      ],
+      "title": "Sessy Batteries",
+      "type": "timeseries"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-2d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Battery - HA-Velp",
+  "uid": "addczr8",
+  "version": 44,
+  "weekStart": ""
+}
